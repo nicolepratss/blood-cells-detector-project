@@ -1,4 +1,20 @@
 import streamlit as st
+import os
+import sys
+import subprocess
+
+def fix_opencv():
+    try:
+        import pkg_resources
+        installed = [pkg.key for pkg in pkg_resources.working_set]
+        if 'opencv-python' in installed:
+            subprocess.check_call([sys.executable, "-m", "pip", "uninstall", "-y", "opencv-python", "opencv-python-headless"])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "opencv-python-headless"])
+    except Exception:
+        pass
+
+fix_opencv()
+
 import cv2
 import numpy as np
 from PIL import Image
