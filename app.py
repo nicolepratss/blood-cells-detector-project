@@ -1,21 +1,10 @@
 import streamlit as st
-import os
-import sys
-import subprocess
-
-def fix_opencv():
-    try:
-        import pkg_resources
-        installed = [pkg.key for pkg in pkg_resources.working_set]
-        if 'opencv-python' in installed:
-            subprocess.check_call([sys.executable, "-m", "pip", "uninstall", "-y", "opencv-python", "opencv-python-headless"])
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "opencv-python-headless"])
-    except Exception:
-        pass
-
-fix_opencv()
-
-import cv2
+try:
+    import cv2
+except Exception as e:
+    st.error(f"OpenCV Import Error: {e}")
+    st.stop()
+    
 import numpy as np
 from PIL import Image
 from collections import Counter
