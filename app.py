@@ -1,5 +1,16 @@
 import streamlit as st
-import cv2
+import os
+import subprocess
+
+try:
+    import cv2
+except ImportError:
+    # Streamlit Cloud workaround: Ultralytics installs the GUI version of opencv-python
+    # which fails to load due to missing system libraries. We forcefully replace it with headless.
+    subprocess.check_call(["pip", "uninstall", "-y", "opencv-python", "opencv-python-headless"])
+    subprocess.check_call(["pip", "install", "opencv-python-headless"])
+    import cv2
+
 import numpy as np
 from PIL import Image
 from collections import Counter
